@@ -2,28 +2,91 @@
 <html>
 <head>
 	<title>Demo</title>
+	<style type="text/css">
+		:root{
+			--bright:yellow;
+		}
+		.main span{
+			background-color: var(--bright,orange);
+			font-family: 'Rubik',simhei;
+			display: inline-block;
+			width: 50px;
+		}
+		[type='button']{background-color: white;}
+		@keyframes note{
+			0%{transform: translate(0px);}
+			25%{transform: translate(10px);}
+			50%{transform: translate(20px);}
+			75%{transform: translate(10px);}
+			100%{transform: translate(0px);}
+		}
+		@-webkit-keyframes note{
+			0%{transform: translate(0px);}
+			25%{transform: translate(10px);}
+			50%{transform: translate(20px);}
+			75%{transform: translate(10px);}
+			100%{transform: translate(0px);}
+		}
+		.notes{animation-name: note;
+			animation-delay: 0.1s;
+			animation-duration: 0.3s;
+			animation-direction: alternate;
+			animation-iteration-count: 5;
+			color: red;
+			font-size: 5px;
+			padding-left: 50px;
+		}
+	</style>
 </head>
 <body>
-	<div>
-		<span>Name:</span>
-		<input type="text" name="names">
-		<span>Age:</span>
-		<input type="text" name="age">
-		<input type="button" value="+" id="add">
-		<input type="button" value="-" id="cancel">
+	<div class="main">
+			<label>
+				<span>Name:</span>
+				<input type="text" name="names" placeholder="鲁智深">
+			</label>
+			<p class="notes"></p>
+			<label>
+				<span>Age:</span>
+				<input type="text" name="age" placeholder="35">
+			</label>
+			<p class="notes"></p>
+			<input type="button" value="+" id="add">
+			<input type="button" value="-" id="cancel">
 	</div>
 	<div id="result">
 		
 	</div>
 	<script type="text/javascript">
+		//获取元素
 		var add=document.getElementById('add');
 		var cancel=document.getElementById('cancel');
 		var result=document.getElementById('result');
 		var names=document.getElementsByName('names')[0];
 		var age=document.getElementsByName('age')[0];
+		//检查是否为空
+		var check=function(){
+			var note=document.getElementsByClassName('notes');
+			if (this.value=='' & this.name=='names') {
+				console.log(this.value)
+				note[0].innerHTML=this.name+'不能为空'
+			}
+			else if(this.value==''){
+				note[1].innerHTML=this.name+'不能为空'
+			}
+			else{
+				note[0].innerHTML='';
+				note[1].innerHTML=''
+			}
+		}
+		names.onblur=check
+		age.onblur=check
+		//增删操作
 		var handle=function(){
 			process={'+':'created','-':'canceled'}
-			result.innerHTML=new Date().toLocaleTimeString()+' Person:'+ names.value +',age:'+ age.value +' has been '+process[this.value]+'.'
+			if(names.value!=='' & age.value!=='')
+			{
+				result.innerHTML=new Date().toLocaleTimeString()+' Person:'+ names.value +',age:'+ age.value +' has been '+process[this.value]+'.'
+			}
 		}
 		add.onclick=handle
 		cancel.onclick=handle
