@@ -86,8 +86,9 @@
 			process={'+':'created','-':'canceled'}
 			if(names.value!=='' & age.value!=='')
 			{
-				result.innerHTML=new Date().toLocaleTimeString()+' Person:'+ names.value +',age:'+ age.value +' has been '+process[this.value]+'.'
+				result.innerHTML=new Date().toLocaleTimeString()+' Person:'+ names.value +',age:'+ age.value +' has been '+process[this.value]+'.';
 			}
+			names.value=age.value='';
 		}
 		add.onclick=handle
 		cancel.onclick=handle
